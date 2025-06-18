@@ -30,4 +30,7 @@ public class PessoaController {
     public String deletarPessoa(){
         return "Deletar pessoa com sucesso";
     }
+
+    @GetMapping("/{id}/idade")
+    public String mostrarIdade(){return "Voce tem ... de idade";}
 }
