@@ -1,14 +1,19 @@
 package dev.dbserver.CRUDPE.CRUDPE.Pessoa;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/pessoas")
 public class PessoaController {
+    @Autowired
+    private PessoaService pessoaService;
 
     @GetMapping("/listar")
-    public String listarPessoas(){
-        return "Listar pessoas com sucesso";
+    public List<PessoaModel> listarPessoas(){
+        return pessoaService.listarPessoas();
     }
 
     @PostMapping("/criar")
