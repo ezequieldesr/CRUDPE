@@ -1,5 +1,6 @@
 package dev.dbserver.CRUDPE.CRUDPE.Pessoa;
 
+import dev.dbserver.CRUDPE.CRUDPE.Endereco.EnderecoModel;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 
 @Entity
 @Data
+@Table(name = "tb_pessoas")
 @NoArgsConstructor
 @AllArgsConstructor
 public class PessoaModel {
@@ -30,5 +32,7 @@ public class PessoaModel {
     @NotBlank(message = "O CPF é obrigatório!")
     private String cpf;
 
-
+    @ManyToOne
+    @JoinColumn(name = "enderecos_id")
+    private EnderecoModel endereco;
 }
