@@ -1,12 +1,16 @@
 package dev.dbserver.CRUDPE.CRUDPE.Endereco;
 
+import dev.dbserver.CRUDPE.CRUDPE.Pessoa.PessoaModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
+@Table(name = "tb_enderecos")
 @NoArgsConstructor
 @AllArgsConstructor
 public class EnderecoModel {
@@ -33,5 +37,6 @@ public class EnderecoModel {
     @Column(name = "CEP")
     private String cep;
 
-
+    @OneToMany(mappedBy = "enderecos")
+    private List<PessoaModel> pessoa;
 }
