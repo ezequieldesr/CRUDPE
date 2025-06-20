@@ -34,6 +34,6 @@ public class PessoaController {
         return "Deletar pessoa com sucesso";
     }
 
-    @GetMapping("/{id}/idade")
-    public String mostrarIdade(){return "Voce tem ... de idade";}
+    @GetMapping("/idade/{id}")
+    public int mostrarIdade(@PathVariable Long id){return pessoaService.mostrarIdade(id);}
 }

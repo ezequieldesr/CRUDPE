@@ -3,6 +3,8 @@ package dev.dbserver.CRUDPE.CRUDPE.Pessoa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.Period;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,5 +25,10 @@ public class PessoaService {
 
     public PessoaModel criarPessoa(PessoaModel pessoaModel){
         return pessoaRepository.save(pessoaModel);
+    }
+
+    public int mostrarIdade(Long id){
+        PessoaModel pessoaModel = buscarPessoaPorId(id);
+        return Period.between(pessoaModel.getDataNascimento(), LocalDate.now()).getYears();
     }
 }
