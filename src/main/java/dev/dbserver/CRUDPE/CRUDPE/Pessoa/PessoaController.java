@@ -12,12 +12,12 @@ public class PessoaController {
     private PessoaService pessoaService;
 
     @GetMapping("/listar")
-    public List<PessoaModel> listarPessoas(){
+    public List<PessoaDTO> listarPessoas(){
         return pessoaService.listarPessoas();
     }
 
     @GetMapping("/{id}")
-    public PessoaModel buscarPorId(@PathVariable Long id){ return pessoaService.buscarPessoaPorId(id);}
+    public PessoaDTO buscarPorId(@PathVariable Long id){ return pessoaService.buscarPessoaPorId(id);}
 
     @PostMapping("/criar")
     public PessoaDTO criarPessoa(@RequestBody PessoaDTO pessoaDTO){
@@ -25,7 +25,7 @@ public class PessoaController {
     }
 
     @PutMapping("/atualizar/{id}")
-    public PessoaModel atualizarPessoa(@PathVariable Long id, @RequestBody PessoaModel pessoaAtualizada){
+    public PessoaDTO atualizarPessoa(@PathVariable Long id, @RequestBody PessoaDTO pessoaAtualizada){
         return pessoaService.atualizarPessoa(id,pessoaAtualizada);
     }
 

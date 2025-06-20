@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PessoaService {
@@ -15,13 +16,16 @@ public class PessoaService {
     private PessoaRepository pessoaRepository;
     private PessoaMapper pessoaMapper;
 
-    public List<PessoaModel> listarPessoas(){
-        return pessoaRepository.findAll();
+    public List<PessoaDTO> listarPessoas(){
+        List<PessoaModel> pessoas = pessoaRepository.findAll();
+        return pessoas.stream()
+                .map(pessoaMapper::map)
+                .collect(Collectors.toList());
     }
 
-    public PessoaModel buscarPessoaPorId(Long id){
+    public PessoaDTO buscarPessoaPorId(Long id){
         Optional<PessoaModel> pessoaModel = pessoaRepository.findById(id);
-        return pessoaModel.orElse(null);
+        return pessoaModel.map(pessoaMapper::map).orElse(null);
     }
 
     public PessoaDTO criarPessoa(PessoaDTO pessoaDTO){
@@ -30,10 +34,13 @@ public class PessoaService {
         return pessoaMapper.map(pessoa);
     }
 
-    public PessoaModel atualizarPessoa(Long id, PessoaModel pessoaAtualizada){
-        if(pessoaRepository.existsById(id)){
+    public PessoaDTO atualizarPessoa(Long id, PessoaDTO pessoaDTO){
+        Optional<PessoaModel> pessoa = pessoaRepository.findById(id);
+        if(pessoa.isPresent()){
+            PessoaModel pessoaAtualizada = pessoaMapper.map(pessoaDTO);
             pessoaAtualizada.setId(id);
-            return pessoaRepository.save(pessoaAtualizada);
+            PessoaModel pessoaSalva = pessoaRepository.save(pessoaAtualizada);
+            return pessoaMapper.map(pessoaSalva);
         }
         return null;
     }
@@ -43,7 +50,7 @@ public class PessoaService {
     }
 
     public int mostrarIdade(Long id){
-        PessoaModel pessoaModel = buscarPessoaPorId(id);
-        return Period.between(pessoaModel.getDataNascimento(), LocalDate.now()).getYears();
+        PessoaDTO pessoaDTO = buscarPessoaPorId(id);
+        return Period.between(pessoaDTO.getDataNascimento(), LocalDate.now()).getYears();
     }
 }
