@@ -16,9 +16,12 @@ public class PessoaController {
         return pessoaService.listarPessoas();
     }
 
+    @GetMapping("/{id}")
+    public PessoaModel buscarPorId(@PathVariable Long id){ return pessoaService.buscarPessoaPorId(id);}
+
     @PostMapping("/criar")
-    public String criarPessoa(){
-        return "Pessoa criada com sucesso";
+    public PessoaModel criarPessoa(@RequestBody PessoaModel pessoaModel){
+        return pessoaService.criarPessoa(pessoaModel);
     }
 
     @PutMapping("/atualizar")
@@ -31,6 +34,6 @@ public class PessoaController {
         return "Deletar pessoa com sucesso";
     }
 
-    @GetMapping("/{id}/idade")
-    public String mostrarIdade(){return "Voce tem ... de idade";}
+    @GetMapping("/idade/{id}")
+    public int mostrarIdade(@PathVariable Long id){return pessoaService.mostrarIdade(id);}
 }
