@@ -14,6 +14,8 @@ public class PessoaService {
 
     @Autowired
     private PessoaRepository pessoaRepository;
+
+    @Autowired
     private PessoaMapper pessoaMapper;
 
     public List<PessoaDTO> listarPessoas(){
