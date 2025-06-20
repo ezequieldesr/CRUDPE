@@ -12,26 +12,26 @@ public class PessoaController {
     private PessoaService pessoaService;
 
     @GetMapping("/listar")
-    public List<PessoaModel> listarPessoas(){
+    public List<PessoaDTO> listarPessoas(){
         return pessoaService.listarPessoas();
     }
 
     @GetMapping("/{id}")
-    public PessoaModel buscarPorId(@PathVariable Long id){ return pessoaService.buscarPessoaPorId(id);}
+    public PessoaDTO buscarPorId(@PathVariable Long id){ return pessoaService.buscarPessoaPorId(id);}
 
     @PostMapping("/criar")
-    public PessoaModel criarPessoa(@RequestBody PessoaModel pessoaModel){
-        return pessoaService.criarPessoa(pessoaModel);
+    public PessoaDTO criarPessoa(@RequestBody PessoaDTO pessoaDTO){
+        return pessoaService.criarPessoa(pessoaDTO);
     }
 
-    @PutMapping("/atualizar")
-    public String atualizarPessoa(){
-        return "Atualizar pessoa com sucesso";
+    @PutMapping("/atualizar/{id}")
+    public PessoaDTO atualizarPessoa(@PathVariable Long id, @RequestBody PessoaDTO pessoaAtualizada){
+        return pessoaService.atualizarPessoa(id,pessoaAtualizada);
     }
 
-    @DeleteMapping("/deletar")
-    public String deletarPessoa(){
-        return "Deletar pessoa com sucesso";
+    @DeleteMapping("/deletar/{id}")
+    public void deletarPessoa(@PathVariable Long id){
+         pessoaService.deletarPessoaPorId(id);
     }
 
     @GetMapping("/idade/{id}")
