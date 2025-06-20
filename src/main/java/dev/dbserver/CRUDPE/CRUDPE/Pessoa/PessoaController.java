@@ -24,9 +24,9 @@ public class PessoaController {
         return pessoaService.criarPessoa(pessoaModel);
     }
 
-    @PutMapping("/atualizar")
-    public String atualizarPessoa(){
-        return "Atualizar pessoa com sucesso";
+    @PutMapping("/atualizar/{id}")
+    public PessoaModel atualizarPessoa(@PathVariable Long id, @RequestBody PessoaModel pessoaAtualizada){
+        return pessoaService.atualizarPessoa(id,pessoaAtualizada);
     }
 
     @DeleteMapping("/deletar/{id}")

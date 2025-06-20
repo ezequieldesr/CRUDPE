@@ -27,6 +27,14 @@ public class PessoaService {
         return pessoaRepository.save(pessoaModel);
     }
 
+    public PessoaModel atualizarPessoa(Long id, PessoaModel pessoaAtualizada){
+        if(pessoaRepository.existsById(id)){
+            pessoaAtualizada.setId(id);
+            return pessoaRepository.save(pessoaAtualizada);
+        }
+        return null;
+    }
+
     public void deletarPessoaPorId(Long id){
         pessoaRepository.deleteById(id);
     }
