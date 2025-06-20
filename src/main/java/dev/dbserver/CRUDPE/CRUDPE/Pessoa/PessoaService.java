@@ -13,6 +13,7 @@ public class PessoaService {
 
     @Autowired
     private PessoaRepository pessoaRepository;
+    private PessoaMapper pessoaMapper;
 
     public List<PessoaModel> listarPessoas(){
         return pessoaRepository.findAll();
@@ -23,8 +24,10 @@ public class PessoaService {
         return pessoaModel.orElse(null);
     }
 
-    public PessoaModel criarPessoa(PessoaModel pessoaModel){
-        return pessoaRepository.save(pessoaModel);
+    public PessoaDTO criarPessoa(PessoaDTO pessoaDTO){
+        PessoaModel pessoa = pessoaMapper.map(pessoaDTO);
+        pessoa = pessoaRepository.save(pessoa);
+        return pessoaMapper.map(pessoa);
     }
 
     public PessoaModel atualizarPessoa(Long id, PessoaModel pessoaAtualizada){

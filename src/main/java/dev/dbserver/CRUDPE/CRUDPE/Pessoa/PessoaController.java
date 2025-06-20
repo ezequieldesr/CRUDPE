@@ -20,8 +20,8 @@ public class PessoaController {
     public PessoaModel buscarPorId(@PathVariable Long id){ return pessoaService.buscarPessoaPorId(id);}
 
     @PostMapping("/criar")
-    public PessoaModel criarPessoa(@RequestBody PessoaModel pessoaModel){
-        return pessoaService.criarPessoa(pessoaModel);
+    public PessoaDTO criarPessoa(@RequestBody PessoaDTO pessoaDTO){
+        return pessoaService.criarPessoa(pessoaDTO);
     }
 
     @PutMapping("/atualizar/{id}")
