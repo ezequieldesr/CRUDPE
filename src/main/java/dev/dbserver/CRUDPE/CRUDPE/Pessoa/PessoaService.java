@@ -20,4 +20,8 @@ public class PessoaService {
         Optional<PessoaModel> pessoaModel = pessoaRepository.findById(id);
         return pessoaModel.orElse(null);
     }
+
+    public PessoaModel criarPessoa(PessoaModel pessoaModel){
+        return pessoaRepository.save(pessoaModel);
+    }
 }
