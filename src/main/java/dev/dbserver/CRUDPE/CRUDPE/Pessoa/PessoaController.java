@@ -16,6 +16,9 @@ public class PessoaController {
         return pessoaService.listarPessoas();
     }
 
+    @GetMapping("/{id}")
+    public PessoaModel buscarPorId(@PathVariable Long id){ return pessoaService.buscarPessoaPorId(id);}
+
     @PostMapping("/criar")
     public String criarPessoa(){
         return "Pessoa criada com sucesso";
