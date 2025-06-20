@@ -1,5 +1,6 @@
 package dev.dbserver.CRUDPE.CRUDPE.Endereco;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.dbserver.CRUDPE.CRUDPE.Pessoa.PessoaModel;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -38,5 +39,6 @@ public class EnderecoModel {
     private String cep;
 
     @OneToMany(mappedBy = "enderecos")
+    @JsonIgnore
     private List<PessoaModel> pessoas;
 }
