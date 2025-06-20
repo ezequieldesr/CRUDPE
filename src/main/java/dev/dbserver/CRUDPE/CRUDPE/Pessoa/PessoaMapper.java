@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PessoaMapper {
-    public PessoaModel map(PessoaDTO pessoaDTO){
+    public PessoaModel map(PessoaDTO pessoaDTO) {
         PessoaModel pessoaModel = new PessoaModel();
         pessoaModel.setId(pessoaDTO.getId());
         pessoaModel.setNome(pessoaDTO.getNome());
@@ -15,7 +15,7 @@ public class PessoaMapper {
         return pessoaModel;
     }
 
-    public PessoaDTO map(PessoaModel pessoaModel){
+    public PessoaDTO map(PessoaModel pessoaModel) {
         PessoaDTO pessoaDTO = new PessoaDTO();
         pessoaDTO.setId(pessoaModel.getId());
         pessoaDTO.setNome(pessoaModel.getNome());
