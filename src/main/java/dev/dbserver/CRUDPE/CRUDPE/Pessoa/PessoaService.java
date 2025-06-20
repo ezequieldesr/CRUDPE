@@ -27,6 +27,10 @@ public class PessoaService {
         return pessoaRepository.save(pessoaModel);
     }
 
+    public void deletarPessoaPorId(Long id){
+        pessoaRepository.deleteById(id);
+    }
+
     public int mostrarIdade(Long id){
         PessoaModel pessoaModel = buscarPessoaPorId(id);
         return Period.between(pessoaModel.getDataNascimento(), LocalDate.now()).getYears();

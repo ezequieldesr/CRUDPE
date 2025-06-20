@@ -29,9 +29,9 @@ public class PessoaController {
         return "Atualizar pessoa com sucesso";
     }
 
-    @DeleteMapping("/deletar")
-    public String deletarPessoa(){
-        return "Deletar pessoa com sucesso";
+    @DeleteMapping("/deletar/{id}")
+    public void deletarPessoa(@PathVariable Long id){
+         pessoaService.deletarPessoaPorId(id);
     }
 
     @GetMapping("/idade/{id}")
