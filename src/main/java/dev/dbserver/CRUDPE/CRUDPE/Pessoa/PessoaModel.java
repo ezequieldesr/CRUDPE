@@ -34,5 +34,5 @@ public class PessoaModel {
 
     @ManyToOne
     @JoinColumn(name = "enderecos_id")
-    private EnderecoModel endereco;
+    private EnderecoModel enderecos;
 }
