@@ -38,5 +38,5 @@ public class EnderecoModel {
     private String cep;
 
     @OneToMany(mappedBy = "enderecos")
-    private List<PessoaModel> pessoa;
+    private List<PessoaModel> pessoas;
 }
