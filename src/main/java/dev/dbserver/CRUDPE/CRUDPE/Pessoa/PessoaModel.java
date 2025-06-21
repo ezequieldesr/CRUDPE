@@ -8,6 +8,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -32,7 +34,6 @@ public class PessoaModel {
     @NotBlank(message = "O CPF é obrigatório!")
     private String cpf;
 
-    @ManyToOne
-    @JoinColumn(name = "enderecos_id")
-    private EnderecoModel enderecos;
+    @OneToMany(mappedBy = "pessoas", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<EnderecoModel> enderecos = new ArrayList<>();
 }

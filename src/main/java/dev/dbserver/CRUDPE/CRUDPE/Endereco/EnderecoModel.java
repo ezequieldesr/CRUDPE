@@ -38,7 +38,7 @@ public class EnderecoModel {
     @Column(name = "CEP")
     private String cep;
 
-    @OneToMany(mappedBy = "enderecos")
-    @JsonIgnore
-    private List<PessoaModel> pessoas;
+    @ManyToOne
+    @JoinColumn(name = "pessoa_id")
+    private PessoaModel pessoas;
 }

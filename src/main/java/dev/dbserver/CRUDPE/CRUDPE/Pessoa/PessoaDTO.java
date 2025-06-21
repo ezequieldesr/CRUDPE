@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -15,5 +17,5 @@ public class PessoaDTO {
     private String nome;
     private LocalDate dataNascimento;
     private String cpf;
-    private EnderecoModel enderecos;
+    private List<EnderecoModel> enderecos = new ArrayList<>();
 }

@@ -13,6 +13,8 @@ public class EnderecoMapper {
         enderecoModel.setCidade(enderecoDTO.getCidade());
         enderecoModel.setEstado(enderecoDTO.getEstado());
         enderecoModel.setCep(enderecoDTO.getCep());
+        enderecoModel.setPessoas(enderecoDTO.getPessoas());
+
 
         return enderecoModel;
     }
@@ -26,6 +28,7 @@ public class EnderecoMapper {
         enderecoDTO.setCidade(enderecoModel.getCidade());
         enderecoDTO.setEstado(enderecoModel.getEstado());
         enderecoDTO.setCep(enderecoModel.getCep());
+        enderecoDTO.setPessoas(enderecoModel.getPessoas());
 
         return enderecoDTO;
     }
