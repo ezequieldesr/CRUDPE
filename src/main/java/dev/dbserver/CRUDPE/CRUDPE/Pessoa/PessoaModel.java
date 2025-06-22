@@ -1,5 +1,6 @@
 package dev.dbserver.CRUDPE.CRUDPE.Pessoa;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import dev.dbserver.CRUDPE.CRUDPE.Endereco.EnderecoModel;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -35,5 +36,6 @@ public class PessoaModel {
     private String cpf;
 
     @OneToMany(mappedBy = "pessoas", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @JsonManagedReference
     private List<EnderecoModel> enderecos = new ArrayList<>();
 }
