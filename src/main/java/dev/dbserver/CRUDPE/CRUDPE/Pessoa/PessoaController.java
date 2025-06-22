@@ -15,59 +15,35 @@ public class PessoaController {
 
     @GetMapping("/listar")
     public ResponseEntity<List<PessoaDTO>> listarPessoas() {
-        List<PessoaDTO> pessoa = pessoaService.listarPessoas();
-        return ResponseEntity.ok(pessoa);
+        return ResponseEntity.ok(pessoaService.listarPessoas());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> buscarPorId(@PathVariable Long id) {
-        PessoaDTO pessoa = pessoaService.buscarPessoaPorId(id);
-        if (pessoa != null) {
-            return ResponseEntity.ok(pessoa);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("A pessoa com o id " + id + " nao existe nos nossos registros.");
-        }
-
+    public ResponseEntity<PessoaDTO> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(pessoaService.buscarPessoaPorId(id));
     }
 
     @PostMapping("/criar")
-    public ResponseEntity<String> criarPessoa(@RequestBody PessoaDTO pessoa) {
-        PessoaDTO pessoaDTO = pessoaService.criarPessoa(pessoa);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body("Pessoa criada com sucesso: " + pessoaDTO.getNome() + ", (ID): " + pessoaDTO.getId());
+    public ResponseEntity<PessoaDTO> criarPessoa(@RequestBody PessoaDTO pessoa) {
+        PessoaDTO pessoaCriada = pessoaService.criarPessoa(pessoa);
+        return new ResponseEntity<>(pessoaCriada, HttpStatus.CREATED);
     }
 
     @PutMapping("/atualizar/{id}")
-    public ResponseEntity<?> atualizarPessoa(@PathVariable Long id, @RequestBody PessoaDTO pessoaAtualizada) {
-        PessoaDTO pessoa = pessoaService.atualizarPessoa(id, pessoaAtualizada);
-        if (pessoa != null) {
-            return ResponseEntity.ok(pessoa);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("Pessoa com o id: " + id + " nao existe nos nossos registros");
-        }
+    public ResponseEntity<PessoaDTO> atualizarPessoa(@PathVariable Long id, @RequestBody PessoaDTO pessoaAtualizada) {
+        return ResponseEntity.ok(pessoaService.atualizarPessoa(id, pessoaAtualizada));
     }
 
     @DeleteMapping("/deletar/{id}")
     public ResponseEntity<String> deletarPessoa(@PathVariable Long id) {
-        if (pessoaService.buscarPessoaPorId(id) != null) {
-            pessoaService.deletarPessoaPorId(id);
-            return ResponseEntity.ok("Pessoa com o ID " + id + " deletado com sucesso!");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("A pessoa com o id " + id + " nao existe nos nossos registros.");
-        }
+        pessoaService.deletarPessoaPorId(id);
+        return ResponseEntity.ok("Pessoa com o ID " + id + " deletada com sucesso!");
     }
 
     @GetMapping("/idade/{id}")
     public ResponseEntity<String> mostrarIdade(@PathVariable Long id) {
         PessoaDTO pessoa = pessoaService.buscarPessoaPorId(id);
-        if (pessoa != null) {
-            return ResponseEntity.ok(pessoa.getNome() + " tem " + pessoaService.mostrarIdade(id) + " anos de idade");
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("A pessoa com o id " + id + " nao existe nos nossos registros.");
-        }
+        int idade = pessoaService.mostrarIdade(id);
+        return ResponseEntity.ok(pessoa.getNome() + " tem " + idade + " anos de idade");
     }
 }

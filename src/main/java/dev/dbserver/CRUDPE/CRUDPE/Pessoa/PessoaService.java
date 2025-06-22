@@ -1,12 +1,12 @@
 package dev.dbserver.CRUDPE.CRUDPE.Pessoa;
 
+import dev.dbserver.CRUDPE.CRUDPE.Exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,28 +26,38 @@ public class PessoaService {
     }
 
     public PessoaDTO buscarPessoaPorId(Long id) {
-        Optional<PessoaModel> pessoaModel = pessoaRepository.findById(id);
-        return pessoaModel.map(pessoaMapper::map).orElse(null);
+        PessoaModel pessoa = pessoaRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Pessoa com o id " + id + " não encontrada."));
+        return pessoaMapper.map(pessoa);
     }
 
     public PessoaDTO criarPessoa(PessoaDTO pessoaDTO) {
         PessoaModel pessoa = pessoaMapper.map(pessoaDTO);
-        pessoa = pessoaRepository.save(pessoa);
-        return pessoaMapper.map(pessoa);
+
+        if (pessoa.getEnderecos() != null) {
+            pessoa.getEnderecos().forEach(endereco -> endereco.setPessoa(pessoa));
+        }
+
+        PessoaModel pessoaSalva = pessoaRepository.save(pessoa);
+        return pessoaMapper.map(pessoaSalva);
     }
 
     public PessoaDTO atualizarPessoa(Long id, PessoaDTO pessoaDTO) {
-        Optional<PessoaModel> pessoa = pessoaRepository.findById(id);
-        if (pessoa.isPresent()) {
-            PessoaModel pessoaAtualizada = pessoaMapper.map(pessoaDTO);
-            pessoaAtualizada.setId(id);
-            PessoaModel pessoaSalva = pessoaRepository.save(pessoaAtualizada);
-            return pessoaMapper.map(pessoaSalva);
-        }
-        return null;
+        PessoaModel pessoaExistente = pessoaRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Pessoa com o id " + id + " não encontrada para atualização."));
+
+        pessoaExistente.setNome(pessoaDTO.getNome());
+        pessoaExistente.setDataNascimento(pessoaDTO.getDataNascimento());
+        pessoaExistente.setCpf(pessoaDTO.getCpf());
+
+        PessoaModel pessoaSalva = pessoaRepository.save(pessoaExistente);
+        return pessoaMapper.map(pessoaSalva);
     }
 
     public void deletarPessoaPorId(Long id) {
+        if (!pessoaRepository.existsById(id)) {
+            throw new ResourceNotFoundException("Pessoa com o id " + id + " não encontrada para deleção.");
+        }
         pessoaRepository.deleteById(id);
     }
 
