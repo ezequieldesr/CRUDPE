@@ -16,36 +16,30 @@ public class EnderecoController {
 
     @GetMapping("/listar")
     public ResponseEntity<List<EnderecoDTO>> listarEnderecos(){
-        List<EnderecoDTO> endereco = enderecoService.listarEnderecos();
-        return ResponseEntity.ok(endereco);
+        return ResponseEntity.ok(enderecoService.listarEnderecos());
     }
 
-    @GetMapping("{id}")
-    public ResponseEntity<?> buscarPorId(@PathVariable Long id){
-        EnderecoDTO enderecoDTO = enderecoService.buscarEnderecoPorId(id);
-        if(enderecoDTO != null){
-            return ResponseEntity.ok(enderecoDTO);
-        }else{
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("O endereco com o id " + enderecoDTO.getId() + " nao existe nos nossos registros");
-        }
+    @GetMapping("/{id}")
+    public ResponseEntity<EnderecoDTO> buscarPorId(@PathVariable Long id){
+        return ResponseEntity.ok(enderecoService.buscarEnderecoPorId(id));
     }
 
     @PostMapping("/criar")
-    public ResponseEntity<String> criarEndereco(@RequestBody EnderecoDTO endereco){
-        EnderecoDTO enderecoDTO = enderecoService.criarEndereco(endereco);
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body("Endereco criado com sucesso! (ID): " + enderecoDTO.getId());
+    public ResponseEntity<EnderecoDTO> criarEndereco(@RequestBody EnderecoDTO endereco){
+        EnderecoDTO enderecoCriado = enderecoService.criarEndereco(endereco);
+        return new ResponseEntity<>(enderecoCriado, HttpStatus.CREATED);
     }
 
-    @PutMapping("/atualizar")
-    public String atualizarEndereco(){
-        return "Atualizar pessoa com sucesso";
+    @PutMapping("/atualizar/{id}")
+    public ResponseEntity<EnderecoDTO> atualizarEndereco(@PathVariable Long id, @RequestBody EnderecoDTO endereco){
+        EnderecoDTO enderecoAtualizado = enderecoService.atualizarEndereco(id, endereco);
+        return ResponseEntity.ok(enderecoAtualizado);
     }
 
-    @DeleteMapping("/deletar")
-    public String deletarEndereco(){
-        return "Deletar pessoa com sucesso";
+    @DeleteMapping("/deletar/{id}")
+    public ResponseEntity<String> deletarEndereco(@PathVariable Long id){
+        enderecoService.deletarEndereco(id);
+        return ResponseEntity.ok("Endereço com o ID " + id + " deletado com sucesso!");
     }
 
 }
