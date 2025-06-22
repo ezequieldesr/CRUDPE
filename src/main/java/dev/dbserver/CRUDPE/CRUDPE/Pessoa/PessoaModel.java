@@ -35,7 +35,7 @@ public class PessoaModel {
     @NotBlank(message = "O CPF é obrigatório!")
     private String cpf;
 
-    @OneToMany(mappedBy = "pessoas", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<EnderecoModel> enderecos = new ArrayList<>();
 }
