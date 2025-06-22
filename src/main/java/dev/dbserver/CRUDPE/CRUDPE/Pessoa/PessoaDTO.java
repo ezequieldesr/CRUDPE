@@ -1,11 +1,14 @@
 package dev.dbserver.CRUDPE.CRUDPE.Pessoa;
 
+import dev.dbserver.CRUDPE.CRUDPE.Endereco.EnderecoDTO;
 import dev.dbserver.CRUDPE.CRUDPE.Endereco.EnderecoModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -15,5 +18,5 @@ public class PessoaDTO {
     private String nome;
     private LocalDate dataNascimento;
     private String cpf;
-    private EnderecoModel enderecos;
+    private List<EnderecoDTO> enderecos = new ArrayList<>();
 }
