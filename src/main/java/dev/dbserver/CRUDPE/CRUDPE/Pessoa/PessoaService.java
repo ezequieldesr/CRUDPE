@@ -46,9 +46,15 @@ public class PessoaService {
         PessoaModel pessoaExistente = pessoaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Pessoa com o id " + id + " não encontrada para atualização."));
 
-        pessoaExistente.setNome(pessoaDTO.getNome());
-        pessoaExistente.setDataNascimento(pessoaDTO.getDataNascimento());
-        pessoaExistente.setCpf(pessoaDTO.getCpf());
+        if (pessoaDTO.getNome() != null && !pessoaDTO.getNome().isEmpty()) {
+            pessoaExistente.setNome(pessoaDTO.getNome());
+        }
+        if (pessoaDTO.getDataNascimento() != null) {
+            pessoaExistente.setDataNascimento(pessoaDTO.getDataNascimento());
+        }
+        if (pessoaDTO.getCpf() != null && !pessoaDTO.getCpf().isEmpty()) {
+            pessoaExistente.setCpf(pessoaDTO.getCpf());
+        }
 
         PessoaModel pessoaSalva = pessoaRepository.save(pessoaExistente);
         return pessoaMapper.map(pessoaSalva);
