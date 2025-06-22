@@ -34,6 +34,6 @@ public class PessoaModel {
     @NotBlank(message = "O CPF é obrigatório!")
     private String cpf;
 
-    @OneToMany(mappedBy = "pessoas", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "pessoas", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<EnderecoModel> enderecos = new ArrayList<>();
 }

@@ -38,7 +38,7 @@ public class EnderecoModel {
     @Column(name = "CEP")
     private String cep;
 
-    @ManyToOne
-    @JoinColumn(name = "pessoa_id")
-    private PessoaModel pessoas;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pessoa_id", nullable = false)
+    private PessoaModel pessoa;
 }
