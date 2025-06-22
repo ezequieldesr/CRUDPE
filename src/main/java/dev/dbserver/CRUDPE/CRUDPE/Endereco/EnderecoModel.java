@@ -1,5 +1,6 @@
 package dev.dbserver.CRUDPE.CRUDPE.Endereco;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.dbserver.CRUDPE.CRUDPE.Pessoa.PessoaModel;
 import jakarta.persistence.*;
@@ -40,5 +41,6 @@ public class EnderecoModel {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pessoa_id", nullable = false)
+    @JsonBackReference
     private PessoaModel pessoa;
 }
