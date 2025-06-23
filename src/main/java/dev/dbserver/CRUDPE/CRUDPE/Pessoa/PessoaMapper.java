@@ -1,6 +1,7 @@
 package dev.dbserver.CRUDPE.CRUDPE.Pessoa;
 
 import dev.dbserver.CRUDPE.CRUDPE.Endereco.EnderecoMapper;
+import dev.dbserver.CRUDPE.CRUDPE.Pessoa.Domain.Pessoa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,33 +12,33 @@ public class PessoaMapper {
     @Autowired
     private EnderecoMapper enderecoMapper;
 
-    public PessoaModel map(PessoaDTO pessoaDTO){
-        PessoaModel pessoaModel = new PessoaModel();
-        pessoaModel.setId(pessoaDTO.getId());
-        pessoaModel.setNome(pessoaDTO.getNome());
-        pessoaModel.setDataNascimento(pessoaDTO.getDataNascimento());
-        pessoaModel.setCpf(pessoaDTO.getCpf());
+    public Pessoa map(PessoaDTO pessoaDTO){
+        Pessoa pessoa = new Pessoa();
+        pessoa.setId(pessoaDTO.getId());
+        pessoa.setNome(pessoaDTO.getNome());
+        pessoa.setDataNascimento(pessoaDTO.getDataNascimento());
+        pessoa.setCpf(pessoaDTO.getCpf());
         if(pessoaDTO.getEnderecos() != null){
-            pessoaModel.setEnderecos(
+            pessoa.setEnderecos(
                     pessoaDTO.getEnderecos().stream()
                             .map(enderecoMapper::map)
                             .collect(Collectors.toList())
             );
-            pessoaModel.getEnderecos().forEach(endereco -> endereco.setPessoa(pessoaModel));
+            pessoa.getEnderecos().forEach(endereco -> endereco.setPessoa(pessoa));
         }
 
-        return pessoaModel;
+        return pessoa;
     }
 
-    public PessoaDTO map(PessoaModel pessoaModel){
+    public PessoaDTO map(Pessoa pessoa){
         PessoaDTO pessoaDTO = new PessoaDTO();
-        pessoaDTO.setId(pessoaModel.getId());
-        pessoaDTO.setNome(pessoaModel.getNome());
-        pessoaDTO.setDataNascimento(pessoaModel.getDataNascimento());
-        pessoaDTO.setCpf(pessoaModel.getCpf());
-        if (pessoaModel.getEnderecos() != null) {
+        pessoaDTO.setId(pessoa.getId());
+        pessoaDTO.setNome(pessoa.getNome());
+        pessoaDTO.setDataNascimento(pessoa.getDataNascimento());
+        pessoaDTO.setCpf(pessoa.getCpf());
+        if (pessoa.getEnderecos() != null) {
             pessoaDTO.setEnderecos(
-                    pessoaModel.getEnderecos().stream()
+                    pessoa.getEnderecos().stream()
                             .map(enderecoMapper::map)
                             .collect(Collectors.toList())
             );

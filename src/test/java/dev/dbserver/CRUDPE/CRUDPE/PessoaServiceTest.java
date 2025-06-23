@@ -2,6 +2,7 @@ package dev.dbserver.CRUDPE.CRUDPE;
 
 import dev.dbserver.CRUDPE.CRUDPE.Exceptions.ResourceNotFoundException;
 import dev.dbserver.CRUDPE.CRUDPE.Pessoa.*;
+import dev.dbserver.CRUDPE.CRUDPE.Pessoa.Domain.Pessoa;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,16 +29,16 @@ public class PessoaServiceTest {
     @InjectMocks
     private PessoaService pessoaService;
 
-    private PessoaModel pessoaModel;
+    private Pessoa pessoa;
     private PessoaDTO pessoaDTO;
 
     @BeforeEach
     void setUp() {
-        pessoaModel = new PessoaModel();
-        pessoaModel.setId(1L);
-        pessoaModel.setNome("João da Silva");
-        pessoaModel.setCpf("12345678901");
-        pessoaModel.setDataNascimento(LocalDate.of(1990, 1, 1));
+        pessoa = new Pessoa();
+        pessoa.setId(1L);
+        pessoa.setNome("João da Silva");
+        pessoa.setCpf("12345678901");
+        pessoa.setDataNascimento(LocalDate.of(1990, 1, 1));
 
         pessoaDTO = new PessoaDTO();
         pessoaDTO.setId(1L);
@@ -49,15 +50,15 @@ public class PessoaServiceTest {
     @Test
     @DisplayName("Deve criar uma pessoa com sucesso")
     void deveCriarPessoaComSucesso() {
-        when(pessoaMapper.map(any(PessoaDTO.class))).thenReturn(pessoaModel);
-        when(pessoaRepository.save(any(PessoaModel.class))).thenReturn(pessoaModel);
-        when(pessoaMapper.map(any(PessoaModel.class))).thenReturn(pessoaDTO);
+        when(pessoaMapper.map(any(PessoaDTO.class))).thenReturn(pessoa);
+        when(pessoaRepository.save(any(Pessoa.class))).thenReturn(pessoa);
+        when(pessoaMapper.map(any(Pessoa.class))).thenReturn(pessoaDTO);
 
         PessoaDTO pessoaSalva = pessoaService.criarPessoa(pessoaDTO);
 
         assertNotNull(pessoaSalva);
         assertEquals("João da Silva", pessoaSalva.getNome());
-        verify(pessoaRepository, times(1)).save(pessoaModel);
+        verify(pessoaRepository, times(1)).save(pessoa);
     }
 
     @Test

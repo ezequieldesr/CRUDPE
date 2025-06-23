@@ -1,7 +1,7 @@
-package dev.dbserver.CRUDPE.CRUDPE.Pessoa;
+package dev.dbserver.CRUDPE.CRUDPE.Pessoa.Domain;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import dev.dbserver.CRUDPE.CRUDPE.Endereco.EnderecoModel;
+import dev.dbserver.CRUDPE.CRUDPE.Endereco.Domain.Endereco;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -17,7 +17,7 @@ import java.util.List;
 @Table(name = "tb_pessoas")
 @NoArgsConstructor
 @AllArgsConstructor
-public class PessoaModel {
+public class Pessoa {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,5 +37,5 @@ public class PessoaModel {
 
     @OneToMany(mappedBy = "pessoa", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     @JsonManagedReference
-    private List<EnderecoModel> enderecos = new ArrayList<>();
+    private List<Endereco> enderecos = new ArrayList<>();
 }

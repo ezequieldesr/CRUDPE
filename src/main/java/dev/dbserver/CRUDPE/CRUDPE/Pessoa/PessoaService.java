@@ -1,6 +1,7 @@
 package dev.dbserver.CRUDPE.CRUDPE.Pessoa;
 
 import dev.dbserver.CRUDPE.CRUDPE.Exceptions.ResourceNotFoundException;
+import dev.dbserver.CRUDPE.CRUDPE.Pessoa.Domain.Pessoa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,31 +20,31 @@ public class PessoaService {
     private PessoaMapper pessoaMapper;
 
     public List<PessoaDTO> listarPessoas() {
-        List<PessoaModel> pessoas = pessoaRepository.findAll();
+        List<Pessoa> pessoas = pessoaRepository.findAll();
         return pessoas.stream()
                 .map(pessoaMapper::map)
                 .collect(Collectors.toList());
     }
 
     public PessoaDTO buscarPessoaPorId(Long id) {
-        PessoaModel pessoa = pessoaRepository.findById(id)
+        Pessoa pessoa = pessoaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Pessoa com o id " + id + " não encontrada."));
         return pessoaMapper.map(pessoa);
     }
 
     public PessoaDTO criarPessoa(PessoaDTO pessoaDTO) {
-        PessoaModel pessoa = pessoaMapper.map(pessoaDTO);
+        Pessoa pessoa = pessoaMapper.map(pessoaDTO);
 
         if (pessoa.getEnderecos() != null) {
             pessoa.getEnderecos().forEach(endereco -> endereco.setPessoa(pessoa));
         }
 
-        PessoaModel pessoaSalva = pessoaRepository.save(pessoa);
+        Pessoa pessoaSalva = pessoaRepository.save(pessoa);
         return pessoaMapper.map(pessoaSalva);
     }
 
     public PessoaDTO atualizarPessoa(Long id, PessoaDTO pessoaDTO) {
-        PessoaModel pessoaExistente = pessoaRepository.findById(id)
+        Pessoa pessoaExistente = pessoaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Pessoa com o id " + id + " não encontrada para atualização."));
 
         if (pessoaDTO.getNome() != null && !pessoaDTO.getNome().isEmpty()) {
@@ -56,7 +57,7 @@ public class PessoaService {
             pessoaExistente.setCpf(pessoaDTO.getCpf());
         }
 
-        PessoaModel pessoaSalva = pessoaRepository.save(pessoaExistente);
+        Pessoa pessoaSalva = pessoaRepository.save(pessoaExistente);
         return pessoaMapper.map(pessoaSalva);
     }
 

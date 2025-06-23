@@ -1,21 +1,18 @@
-package dev.dbserver.CRUDPE.CRUDPE.Endereco;
+package dev.dbserver.CRUDPE.CRUDPE.Endereco.Domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import dev.dbserver.CRUDPE.CRUDPE.Pessoa.PessoaModel;
+import dev.dbserver.CRUDPE.CRUDPE.Pessoa.Domain.Pessoa;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Entity
 @Data
 @Table(name = "tb_enderecos")
 @NoArgsConstructor
 @AllArgsConstructor
-public class EnderecoModel {
+public class Endereco {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "Id")
@@ -42,5 +39,5 @@ public class EnderecoModel {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pessoa_id", nullable = false)
     @JsonBackReference
-    private PessoaModel pessoa;
+    private Pessoa pessoa;
 }

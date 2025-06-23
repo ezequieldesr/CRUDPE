@@ -1,7 +1,8 @@
 package dev.dbserver.CRUDPE.CRUDPE.Endereco;
 
+import dev.dbserver.CRUDPE.CRUDPE.Endereco.Domain.Endereco;
 import dev.dbserver.CRUDPE.CRUDPE.Exceptions.ResourceNotFoundException;
-import dev.dbserver.CRUDPE.CRUDPE.Pessoa.PessoaModel;
+import dev.dbserver.CRUDPE.CRUDPE.Pessoa.Domain.Pessoa;
 import dev.dbserver.CRUDPE.CRUDPE.Pessoa.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,31 +22,31 @@ public class EnderecoService {
     private EnderecoMapper enderecoMapper;
 
     public List<EnderecoDTO> listarEnderecos() {
-        List<EnderecoModel> enderecos = enderecoRepository.findAll();
+        List<Endereco> enderecos = enderecoRepository.findAll();
         return enderecos.stream()
                 .map(enderecoMapper::map)
                 .collect(Collectors.toList());
     }
 
     public EnderecoDTO buscarEnderecoPorId(Long id) {
-        EnderecoModel endereco = enderecoRepository.findById(id)
+        Endereco endereco = enderecoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Endereço com o id " + id + " não encontrado."));
         return enderecoMapper.map(endereco);
     }
 
     public EnderecoDTO criarEndereco(EnderecoDTO enderecoDTO) {
-        PessoaModel pessoa = pessoaRepository.findById(enderecoDTO.getPessoaId())
+        Pessoa pessoa = pessoaRepository.findById(enderecoDTO.getPessoaId())
                 .orElseThrow(() -> new ResourceNotFoundException("Não é possível criar o endereço. Pessoa com o id " + enderecoDTO.getPessoaId() + " não encontrada."));
 
-        EnderecoModel endereco = enderecoMapper.map(enderecoDTO);
+        Endereco endereco = enderecoMapper.map(enderecoDTO);
         endereco.setPessoa(pessoa);
 
-        EnderecoModel enderecoSalvo = enderecoRepository.save(endereco);
+        Endereco enderecoSalvo = enderecoRepository.save(endereco);
         return enderecoMapper.map(enderecoSalvo);
     }
 
     public EnderecoDTO atualizarEndereco(Long id, EnderecoDTO enderecoDTO) {
-        EnderecoModel enderecoExistente = enderecoRepository.findById(id)
+        Endereco enderecoExistente = enderecoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Endereço com o id " + id + " não encontrado para atualização."));
 
         enderecoExistente.setRua(enderecoDTO.getRua());
@@ -55,7 +56,7 @@ public class EnderecoService {
         enderecoExistente.setEstado(enderecoDTO.getEstado());
         enderecoExistente.setCep(enderecoDTO.getCep());
 
-        EnderecoModel enderecoSalvo = enderecoRepository.save(enderecoExistente);
+        Endereco enderecoSalvo = enderecoRepository.save(enderecoExistente);
         return enderecoMapper.map(enderecoSalvo);
     }
 
